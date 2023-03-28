@@ -1,0 +1,37 @@
+version: '3.4'
+
+services:
+  postgres:
+    image: postgres:14.2-alpine3.15
+    container_name: 'postgre_es'
+    volumes:
+      - db_volume:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: OrderDb
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: sa1234
+    ports:
+      - 5432:5432
+    networks:
+      - dtnetwork
+
+  pgadmin:
+    image: dpage/pgadmin4
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=admin@aspnetrun.com
+      - PGADMIN_DEFAULT_PASSWORD=admin1234
+    restart: always
+    ports:
+      - "5050:80"
+    volumes:
+      - pgadmin_data://root/.pgadmin
+    networks:
+      - dtnetwork
+
+networks:
+  dtnetwork:
+    driver: bridge
+
+volumes:
+  db_volume:
+  pgadmin_data:
