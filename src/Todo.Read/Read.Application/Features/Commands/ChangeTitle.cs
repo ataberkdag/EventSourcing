@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using Core.Domain.Exceptions;
+using MediatR;
 using Read.Application.Services;
 
 namespace Read.Application.Features.Commands
@@ -26,7 +27,7 @@ namespace Read.Application.Features.Commands
                 var todoItem = await _todoItemService.GetByAggregateId(request.AggregateId);
 
                 if (todoItem is null)
-                    throw new Exception("Todo item is null");
+                    throw new BusinessException("Todo not found", "9999");
 
                 todoItem.Title = request.Title;
 

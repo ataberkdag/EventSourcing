@@ -1,4 +1,4 @@
-﻿namespace Write.Domain.Exceptions
+﻿namespace Core.Domain.Exceptions
 {
     public class BusinessException : Exception
     {

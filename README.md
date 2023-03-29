@@ -43,3 +43,33 @@ In this project i have worked on same data model with command project.
 - Confluent Kafka
 - Worker Service
 - MediatR
+
+# Run
+
+## Docker
+
+- To run Kafka, Zookeeper, MongoDB, PostgreSQL and pgAdmin follow this command on Console.
+
+```bash
+docker-compose up -d
+```
+
+## Migration
+
+- To apply migrations follow this command on Package Manager Console for Write.API. (Set starting project to API and set default project to Infrastructure on Package Manager Console)
+
+```bash
+update-database
+```
+
+## Kafka
+
+- Topic must be created to be able to consume messages on Read.API. Kafka let us create topics over console but we can create topics with produce requests. For this, start Write.API and OutboxWorker first and Create a Todo item over Write.API. Topic will be created when OutboxWorker read Write.API's Outbox table and Produce the messages.
+
+## PostgreSQL
+
+- Default cridentials are **"admin"** and **"sa1234"**. User and password can be changed over docker-compose.yml.
+
+## pgAdmin
+
+- Default cridentials are **"admin@aspnetrun.com"** and **"admin1234"**. Username and password can be changed over docker-compose.yml.

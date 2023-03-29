@@ -1,8 +1,8 @@
 ﻿using Core.Application.Common;
+using Core.Domain.Exceptions;
 using MediatR;
 using Write.Application.Services;
 using Write.Domain.Entities;
-using Write.Domain.Exceptions;
 
 namespace Write.Application.Features
 {

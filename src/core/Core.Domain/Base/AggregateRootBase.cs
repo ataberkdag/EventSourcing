@@ -27,7 +27,7 @@ namespace Core.Domain.Base
 
         public void ClearDomainEvents()
         {
-            _domainEvents.Clear();
+            _domainEvents?.Clear();
         }
     }
 }

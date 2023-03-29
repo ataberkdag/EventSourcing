@@ -20,7 +20,7 @@ namespace Read.API.Consumers
             _serviceProvider = serviceProvider;
         }
 
-        // TODO: AutoMapper
+        // AutoMapper
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
             await this._consumer.ConsumeEvent(KafkaConsts.ReadTopicName, async (message) =>

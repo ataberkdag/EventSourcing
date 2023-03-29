@@ -1,10 +1,10 @@
 ﻿using Core.Domain.Abstractions;
 using Core.Domain.Base;
+using Core.Domain.Exceptions;
 using Messages;
 using System.Text.Json;
 using Write.Application.Services;
 using Write.Domain.Entities;
-using Write.Domain.Exceptions;
 
 namespace Write.Infrastructure.Services
 {
@@ -27,7 +27,7 @@ namespace Write.Infrastructure.Services
             var eventRecords = this._dbContextHandler.Get<EventRecord>()
                 .Where(x => x.AggregateId == aggregateId).OrderBy(x => x.CreatedOn).ToList();
 
-            if (eventRecords is null)
+            if (eventRecords is null || eventRecords.Count() == 0)
                 throw new BusinessException("Todo not found", "9999");
 
             foreach (var @event in eventRecords)

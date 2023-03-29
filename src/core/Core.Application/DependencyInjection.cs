@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Core.Application.CrossCuttings;
+using MediatR;
+using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 
 namespace Core.Application
@@ -12,6 +14,9 @@ namespace Core.Application
             services.AddMediatR(opt => {
                 opt.RegisterServicesFromAssembly(assembly);
             });
+
+            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(LoggingBehaviour<,>));
+            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ExceptionHandlingBehaviour<,>));
 
             return services;
         }

@@ -7,7 +7,7 @@ services:
     volumes:
       - db_volume:/var/lib/postgresql/data
     environment:
-      POSTGRES_DB: OrderDb
+      POSTGRES_DB: WriteDb
       POSTGRES_USER: admin
       POSTGRES_PASSWORD: sa1234
     ports:
