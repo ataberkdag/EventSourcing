@@ -1,5 +1,6 @@
 ﻿using Core.Domain.Abstractions;
 using Core.Domain.Base;
+using Messages;
 using System.Text.Json;
 using Write.Application.Services;
 using Write.Domain.Entities;
@@ -53,7 +54,7 @@ namespace Write.Infrastructure.Services
 
                 await this._dbContextHandler.Get<OutboxMessage>()
                     .AddAsync(OutboxMessage.Create(integrationEvent.GetType().AssemblyQualifiedName, JsonSerializer.Serialize(integrationEvent, integrationEvent.GetType()),
-                    "read"));
+                    KafkaConsts.ReadTopicName));
             }
         }
     }

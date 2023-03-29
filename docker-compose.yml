@@ -1,7 +1,7 @@
 version: '3.4'
 
 services:
-  postgres:
+  postgres_es:
     image: postgres:14.2-alpine3.15
     container_name: 'postgre_es'
     volumes:
@@ -12,10 +12,8 @@ services:
       POSTGRES_PASSWORD: sa1234
     ports:
       - 5432:5432
-    networks:
-      - esnetwork
 
-  pgadmin:
+  pgadmin_es:
     image: dpage/pgadmin4
     environment:
       - PGADMIN_DEFAULT_EMAIL=admin@aspnetrun.com
@@ -25,21 +23,17 @@ services:
       - "5050:80"
     volumes:
       - pgadmin_data://root/.pgadmin
-    networks:
-      - esnetwork
 
-  zookeeper:
-    image: confluentinc/cp-zookeeper:7.0.0
-    hostname: zookeeper
+  zookeeper_es:
+    image: confluentinc/cp-zookeeper:7.3.2
+    hostname: zookeeper_es
     container_name: zookeeper_es
     environment:
       ZOOKEEPER_CLIENT_PORT: 2181
       ZOOKEEPER_TICK_TIME: 2000
-    networks:
-      - esnetwork
 
-  broker:
-    image: confluentinc/cp-kafka:7.0.0
+  broker_es:
+    image: confluentinc/cp-kafka:7.3.2
     container_name: broker_es
     ports:
       - 9092:9092
@@ -47,20 +41,25 @@ services:
       - zookeeper_es
     environment:
       KAFKA_BROKER_ID: 1
-      KAFKA_ZOOKEEPER_CONNECT: 'zookeeper:2181'
+      KAFKA_ZOOKEEPER_CONNECT: 'zookeeper_es:2181'
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_INTERNAL:PLAINTEXT
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092,PLAINTEXT_INTERNAL://broker:29092
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092,PLAINTEXT_INTERNAL://broker_es:29092
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
       KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
       KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
       TOPIC_AUTO_CREATE: 1
-    networks:
-      - esnetwork
 
-networks:
-  esnetwork:
-    driver: bridge
+  mongodb_es:
+    image: mongo:5.0
+    ports:
+      - 27017:27017
+    volumes:
+      - mongodb_data:/data/db
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=sample
 
 volumes:
   db_volume:
   pgadmin_data:
+  mongodb_data:
