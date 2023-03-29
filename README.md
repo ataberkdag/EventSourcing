@@ -22,7 +22,7 @@ Project domain is a simple Todo Domain. There is my own Event Store implementati
 
 ## Outbox Worker (Worker Service)
 
-Reads Command Project's Outbox table and Produces events for Read API to consume. (There can be many consumers.)
+Reads Command Project's Outbox table and Produces messages for Read API to consume. (There can be many consumers.)
 
 ### Implementations
 
